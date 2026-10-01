@@ -1,0 +1,541 @@
+/* Colores y fuentes que uso en toda la página.
+   Los nombres son por función (oscuro, acento...) porque
+   cambian según el tema que elija la persona. */
+:root {
+  /* tema por defecto: Bosque */
+  --oscuro: #1F3B2D;
+  --medio: #5C7F4E;
+  --fondo: #EEF2EC;
+  --acento: #E8B931;
+  --claro: #F7F4E9;
+  --texto-menu: #d4d8cf;
+  --borde: #d3dbd0;
+
+  --velocidad: 0.35s;
+}
+
+/* ---------- TEMAS DE COLOR ----------
+   Cada radio del selector cambia las variables.
+   Como todo usa var(...), la página entera cambia sola. */
+
+:root:has(#tema-atardecer:checked) {
+  --oscuro: #4A1F2E;
+  --medio: #9C4F4F;
+  --fondo: #FBF0EA;
+  --acento: #F2A65A;
+  --claro: #FFF6EF;
+  --texto-menu: #e7cdd2;
+  --borde: #ecd6cc;
+}
+
+:root:has(#tema-oceano:checked) {
+  --oscuro: #12324A;
+  --medio: #336B85;
+  --fondo: #EAF3F7;
+  --acento: #5FD3C6;
+  --claro: #F2FAFC;
+  --texto-menu: #c5d6e0;
+  --borde: #cfe0e8;
+}
+
+:root:has(#tema-lavanda:checked) {
+  --oscuro: #2E2552;
+  --medio: #6B5CA5;
+  --fondo: #F1EFF8;
+  --acento: #F4A6C1;
+  --claro: #FAF8FF;
+  --texto-menu: #d3cde6;
+  --borde: #ddd8ee;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* para que el header no tape los títulos */
+}
+
+body {
+  margin: 0;
+  font-family: "Familjen Grotesk", Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--oscuro);
+  background-color: var(--fondo);
+  transition: background-color 0.5s, color 0.5s;
+}
+
+h1, h2 {
+  font-family: "Young Serif", Georgia, serif;
+  font-weight: normal;
+  line-height: 1.2;
+  margin-top: 0;
+}
+
+.contenedor {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* texto solo para lectores de pantalla */
+.oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+/* enlace para saltar al contenido, solo se ve con el teclado */
+.saltar {
+  position: absolute;
+  top: -50px;
+  left: 16px;
+  z-index: 100;
+  padding: 8px 14px;
+  background: var(--acento);
+  color: var(--oscuro);
+  font-weight: 600;
+  border-radius: 6px;
+  transition: top 0.2s;
+}
+
+.saltar:focus {
+  top: 16px;
+}
+
+
+/* ---------- HEADER ---------- */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: var(--oscuro);
+  color: var(--claro);
+  transition: background-color 0.5s;
+}
+
+.header .contenedor {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 72px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "Young Serif", Georgia, serif;
+  font-size: 22px;
+  color: var(--claro);
+  text-decoration: none;
+}
+
+.logo svg {
+  width: 30px;
+  height: 30px;
+  fill: none;
+  stroke: var(--acento);
+  stroke-width: 2;
+  stroke-linecap: round;
+  transition: transform 0.4s;
+}
+
+/* la hoja se mueve un poquito al pasar el mouse */
+.logo:hover svg {
+  transform: rotate(-12deg) scale(1.1);
+}
+
+
+/* ---------- MENÚ ---------- */
+
+.menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.menu a {
+  position: relative;
+  display: inline-block;
+  padding: 8px 0;
+  color: var(--texto-menu);
+  font-weight: 500;
+  text-decoration: none;
+  transition: color var(--velocidad), transform var(--velocidad);
+}
+
+/* la línea de abajo, empieza en 0 de ancho */
+.menu a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 3px;
+  width: 100%;
+  height: 2px;
+  background-color: var(--acento);
+  transform: scaleX(0);
+  transform-origin: right; /* al salir se va hacia la derecha */
+  transition: transform var(--velocidad) ease;
+}
+
+.menu a:hover,
+.menu a:focus-visible {
+  color: var(--claro);
+  transform: translateY(-2px);
+}
+
+.menu a:hover::after,
+.menu a:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left; /* al entrar crece desde la izquierda */
+}
+
+
+/* ---------- LINK ACTIVO ----------
+   Uso :target para saber qué sección está en la URL
+   y con :has() pinto el link que le corresponde.
+   Si no hay ninguna, queda marcado Inicio. */
+
+body:has(#inicio:target) .menu a[href="#inicio"],
+body:has(#colecciones:target) .menu a[href="#colecciones"],
+body:has(#visitas:target) .menu a[href="#visitas"]:not(.boton),
+body:has(#talleres:target) .menu a[href="#talleres"],
+body:has(#contacto:target) .menu a[href="#contacto"],
+body:not(:has(section:target)) .menu a[href="#inicio"] {
+  color: var(--acento);
+}
+
+body:has(#inicio:target) .menu a[href="#inicio"]::after,
+body:has(#colecciones:target) .menu a[href="#colecciones"]::after,
+body:has(#visitas:target) .menu a[href="#visitas"]:not(.boton)::after,
+body:has(#talleres:target) .menu a[href="#talleres"]::after,
+body:has(#contacto:target) .menu a[href="#contacto"]::after,
+body:not(:has(section:target)) .menu a[href="#inicio"]::after {
+  transform: scaleX(1);
+  height: 4px;
+}
+
+/* el título de la sección aparece suave al llegar */
+section:target h1,
+section:target h2 {
+  animation: aparecer 0.6s ease;
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ---------- BOTÓN RESERVAR ---------- */
+
+.menu .boton {
+  overflow: hidden;
+  padding: 8px 18px;
+  border: 2px solid var(--acento);
+  border-radius: 50px;
+  color: var(--acento);
+  font-weight: 600;
+  z-index: 1;
+}
+
+/* aquí uso el ::after como fondo en vez de línea */
+.menu .boton::after {
+  bottom: 0;
+  height: 100%;
+  z-index: -1;
+  transform: translateY(100%);
+}
+
+.menu .boton:hover,
+.menu .boton:focus-visible {
+  color: var(--oscuro);
+  transform: scale(1.05);
+}
+
+.menu .boton:hover::after,
+.menu .boton:focus-visible::after {
+  transform: translateY(0);
+}
+
+
+/* ---------- MENÚ EN CELULAR ---------- */
+
+.check-menu {
+  position: absolute;
+  opacity: 0;
+}
+
+.btn-menu {
+  display: none;
+}
+
+@media (max-width: 830px) {
+
+  .header .contenedor {
+    flex-wrap: wrap;
+  }
+
+  .btn-menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+  }
+
+  /* las 3 rayitas: una es el span y las otras dos son before y after */
+  .barras,
+  .barras::before,
+  .barras::after {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background-color: var(--claro);
+    transition: transform 0.3s, background-color 0.3s;
+  }
+
+  .barras {
+    position: relative;
+  }
+
+  .barras::before,
+  .barras::after {
+    content: "";
+    position: absolute;
+  }
+
+  .barras::before { top: -7px; }
+  .barras::after { top: 7px; }
+
+  /* cuando se abre, se vuelve una X */
+  .check-menu:checked + .btn-menu .barras {
+    background-color: transparent;
+  }
+
+  .check-menu:checked + .btn-menu .barras::before {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .check-menu:checked + .btn-menu .barras::after {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .check-menu:focus-visible + .btn-menu {
+    outline: 2px solid var(--acento);
+  }
+
+  /* el menú queda escondido con max-height 0 */
+  .menu {
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+
+  .check-menu:checked ~ .menu {
+    max-height: 400px;
+  }
+
+  .menu ul {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    padding-bottom: 20px;
+  }
+
+  .menu li {
+    opacity: 0;
+    transform: translateX(-12px);
+    transition: opacity 0.3s, transform 0.3s;
+  }
+
+  /* cada link entra un poquito después del anterior */
+  .check-menu:checked ~ .menu li {
+    opacity: 1;
+    transform: translateX(0);
+    transition-delay: calc(var(--n) * 0.05s);
+  }
+
+  .menu a {
+    padding: 12px 0;
+    font-size: 19px;
+  }
+
+  .menu a::after {
+    width: 40px;
+  }
+
+  .menu a:hover {
+    transform: translateX(4px);
+  }
+
+  .menu .boton {
+    margin-top: 10px;
+  }
+
+  .menu .boton::after {
+    width: 100%;
+  }
+}
+
+
+/* ---------- CONTENIDO ---------- */
+
+section {
+  min-height: 70vh;
+  padding: 80px 0;
+  border-bottom: 1px solid var(--borde);
+}
+
+section p,
+address {
+  max-width: 620px;
+  font-style: normal;
+}
+
+h1 {
+  font-size: clamp(38px, 6vw, 72px);
+  max-width: 750px;
+}
+
+h2 {
+  font-size: clamp(28px, 4vw, 40px);
+}
+
+.intro {
+  font-size: 20px;
+  color: var(--medio);
+}
+
+address a {
+  color: var(--medio);
+}
+
+footer {
+  text-align: center;
+  padding: 30px;
+  font-size: 14px;
+  color: var(--medio);
+}
+
+
+/* ---------- SELECTOR DE COLORES ---------- */
+
+.temas {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 50px;
+  background-color: var(--claro);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.5s;
+}
+
+.temas legend {
+  float: left; /* truco para que la leyenda quede en la misma línea */
+  margin-right: 4px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* escondo el radio pero sigue funcionando con teclado */
+.temas input {
+  position: absolute;
+  opacity: 0;
+}
+
+/* cada círculo muestra los dos colores del tema */
+.temas label {
+  display: block;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition: transform 0.25s, outline-color 0.25s;
+}
+
+.temas label[for="tema-bosque"]    { background: linear-gradient(135deg, #1F3B2D 50%, #E8B931 50%); }
+.temas label[for="tema-atardecer"] { background: linear-gradient(135deg, #4A1F2E 50%, #F2A65A 50%); }
+.temas label[for="tema-oceano"]    { background: linear-gradient(135deg, #12324A 50%, #5FD3C6 50%); }
+.temas label[for="tema-lavanda"]   { background: linear-gradient(135deg, #2E2552 50%, #F4A6C1 50%); }
+
+.temas label:hover {
+  transform: scale(1.15) rotate(15deg);
+}
+
+/* el tema elegido queda con un anillo */
+.temas input:checked + label {
+  outline-color: var(--oscuro);
+  transform: scale(1.1);
+}
+
+.temas input:focus-visible + label {
+  outline: 2px dashed var(--oscuro);
+}
+
+@media (max-width: 480px) {
+  .temas {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+  }
+
+  .temas legend {
+    display: none;
+  }
+
+  footer {
+    padding-bottom: 90px; /* para que el selector no tape el footer */
+  }
+}
+
+
+/* ---------- ACCESIBILIDAD ---------- */
+
+a:focus-visible {
+  outline: 2px solid var(--acento);
+  outline-offset: 4px;
+}
+
+main a:focus-visible {
+  outline-color: var(--oscuro);
+}
+
+/* si la persona tiene desactivadas las animaciones, las quito */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

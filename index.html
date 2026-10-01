@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jardín Botánico Altamira</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600&family=Young+Serif&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+  <header class="header">
+    <div class="contenedor">
+      <a class="logo" href="#inicio">
+        <!-- hojita del logo -->
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M16 29V13" />
+          <path d="M16 18c-6 0-9-4-9-10 6 0 9 4 9 10Z" />
+          <path d="M16 14c5 0 8-3 8-8-5 0-8 3-8 8Z" />
+        </svg>
+        Altamira
+      </a>
+
+      <!-- checkbox para abrir el menú en celular (así no uso JS) -->
+      <input type="checkbox" id="abrir-menu" class="check-menu">
+      <label for="abrir-menu" class="btn-menu">
+        <span class="barras"></span>
+        <span class="oculto">Abrir menú</span>
+      </label>
+
+      <nav class="menu" aria-label="Menú principal">
+        <ul>
+          <li style="--n: 0"><a href="#inicio">Inicio</a></li>
+          <li style="--n: 1"><a href="#colecciones">Colecciones</a></li>
+          <li style="--n: 2"><a href="#visitas">Visitas</a></li>
+          <li style="--n: 3"><a href="#talleres">Talleres</a></li>
+          <li style="--n: 4"><a href="#contacto">Contacto</a></li>
+          <li style="--n: 5"><a href="#visitas" class="boton">Reservar visita</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido" class="contenedor">
+
+    <section id="inicio">
+      <h1>Siete hectáreas de bosque andino para recorrer a pie.</h1>
+      <p class="intro">Tenemos senderos entre robles y helechos gigantes, y más de 300 especies de orquídeas de la región. Puedes moverte por la página con el menú de arriba.</p>
+    </section>
+
+    <section id="colecciones">
+      <h2>Colecciones</h2>
+      <p>El jardín está dividido en tres zonas: el orquideario, el bosque de niebla y la huerta de plantas medicinales. Cada planta tiene una ficha con su nombre común y su nombre científico.</p>
+    </section>
+
+    <section id="visitas">
+      <h2>Visitas</h2>
+      <p>Abrimos de martes a domingo, de 8 a.m. a 5 p.m. Hay recorridos guiados cada hora que salen desde la entrada y duran más o menos hora y media. Si vienen en grupo de más de diez personas, mejor reservar con un par de días de anticipación.</p>
+    </section>
+
+    <section id="talleres">
+      <h2>Talleres</h2>
+      <p>Los sábados hacemos talleres de compostaje, de cómo sembrar esquejes y de dibujo de plantas. No hace falta saber nada antes y los materiales los ponemos nosotros.</p>
+    </section>
+
+    <section id="contacto">
+      <h2>Contacto</h2>
+      <address>
+        Vereda El Roble, km 4<br>
+        <a href="mailto:hola@altamira.example">hola@altamira.example</a>
+      </address>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Hecho con HTML y CSS.</p>
+  </footer>
+
+  <!-- selector de colores: son radios, así que no necesita JS -->
+  <fieldset class="temas">
+    <legend>Colores</legend>
+
+    <input type="radio" name="tema" id="tema-bosque" checked>
+    <label for="tema-bosque" title="Bosque"><span class="oculto">Tema bosque</span></label>
+
+    <input type="radio" name="tema" id="tema-atardecer">
+    <label for="tema-atardecer" title="Atardecer"><span class="oculto">Tema atardecer</span></label>
+
+    <input type="radio" name="tema" id="tema-oceano">
+    <label for="tema-oceano" title="Océano"><span class="oculto">Tema océano</span></label>
+
+    <input type="radio" name="tema" id="tema-lavanda">
+    <label for="tema-lavanda" title="Lavanda"><span class="oculto">Tema lavanda</span></label>
+  </fieldset>
+
+</body>
+</html>
